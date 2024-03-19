@@ -1,0 +1,35 @@
+//menginisialisasi pin PIR dan LED pada program
+#define pirPin 2
+#define ledPin 7
+//Deklarasi variabel Global untuk menyimpan status PIR dan nilai dari PIR 
+int statusPir = LOW;
+int m;
+
+void setup() {
+  	// Mengatur statur pirPin sebagai input dan ledPin sebagai Output
+  	  pinMode(pirPin, INPUT);
+  	  pinMode(ledPin, OUTPUT);
+//melakukan inisialisasi komunikasi serial dengan baud rate 9600 dan delay 1 detik
+  	  Serial.begin(9600);
+  	  delay(1000);
+}
+
+void loop() {
+  	// membaca nilai dari PIR lalu disimpan dalam variabel m
+  	m = digitalRead(pirPin);
+ //Percabangan apabila nilai PIR adalah HIGH atau ada gerakan terdeteksi
+  	if (m == HIGH){
+ //menyalakan LED dan mengirim pesan melalui serial dan memebri delay 1 detik
+    	  digitalWrite(ledPin, HIGH);
+   	  delay(1000);
+    	  Serial.println("Gerakan Terdeteksi");
+    	  statusPir = HIGH;
+  	}
+  	//Jika tidak ada gerakan terdeteksi
+ 	 else{
+    	//led tidak dinyalakan, hanya mengirim pesan lewat serial
+    	  digitalWrite(ledPin, LOW);
+    	  Serial.println("Tidak ada Gerakan");
+    	  statusPir = LOW;
+  	 }
+}
